@@ -1,0 +1,33 @@
+#include<LiquidCrystal.h> // library
+LiquidCrystal lcd(2,3,4,5,6,7); // pin order
+
+int soil = A0;
+
+void setup() {
+  lcd.begin(16, 2); // 16 columns and 2 rows for the lcd screen
+  pinMode(soil, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int value = analogRead(soil);
+  Serial.println(value);
+  lcd.setCursor(2,0);
+  lcd.print("Reading is");
+  lcd.setCursor(3,1);
+  lcd.print(value);
+  delay(100);
+  
+  if(value>500)
+  {
+    digitalWrite(13, HIGH);
+    lcd.setCursor(3,1);
+    lcd.print("Dry");
+  }
+  else
+  {
+    digitalWrite(13, LOW);
+    lcd.setCursor(3,1);
+    lcd.print("Wet");
+    }
+}
